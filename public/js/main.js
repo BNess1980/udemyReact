@@ -20758,21 +20758,22 @@ module.exports = require('./lib/React');
 },{"./lib/React":54}],172:[function(require,module,exports){
 var React = require('react'); // require react
 var ListItem = require('./ListItem.jsx'); // put the extension beacuse its jsx otherwise interpreted as js
-var ingredients = [{ "id": 1, "text": "ham" }, { "id": 2, "text": "cheese" }, { "id": 3, "text": "bologna" }]; // Sample json fake data source
 
 var List = React.createClass({
   displayName: 'List',
 
   render: function () {
-    var listItems = ingredients.map(function (item) {
-      // map each ingredient object to listItem object
-      return React.createElement(ListItem, { key: item.id, ingredient: item.text });
-    });
+
+    var createItem = function (text, index) {
+      return React.createElement(ListItem, { key: index + text, text: text });
+    };
+
     return React.createElement(
       'ul',
       null,
-      listItems
+      this.props.items.map(createItem)
     ); // return ul parent of iterating each listItem object as LI
+    // use map function to apply createItem to this.props.items array
   }
 });
 
@@ -20784,13 +20785,14 @@ var ListItem = React.createClass({
   displayName: 'ListItem',
   // most granular or child element
   render: function () {
+    // this.props.text = properties; get property of text from this object
     return React.createElement(
       'li',
       null,
       React.createElement(
         'h4',
         null,
-        this.props.ingredient
+        this.props.text
       )
     );
   }
@@ -20800,15 +20802,79 @@ module.exports = ListItem; // export to make available to parent component
 
 },{"react":171}],174:[function(require,module,exports){
 var React = require('react'); // require react
+var List = require('./List.jsx'); // put the extension beacuse its jsx otherwise interpreted as js
+var ListManager = React.createClass({
+  displayName: 'ListManager',
+  // most granular or child element
+
+  // Everytime a component is rendered this funciton will be called
+  // Initializes empty items array
+  getInitialState: function () {
+    return { items: [], newItemText: "" };
+  },
+
+  onChange: function (e) {
+    this.setState({ newItemText: e.target.value });
+  },
+
+  // Fucntion scoped to ListManager component
+  // press submit button and have items array update with text entered in input
+  handleSubmit: function (e) {
+    e.preventDefault(); // Prevent default action
+
+    // Create a new object and assign existing state items array to it;
+    var currentItems = this.state.items; // state is data that gets mutated; this.props does not get mutated/read-only!
+
+    // every component has state and props
+    currentItems.push(this.state.newItemText); // push to new object; state hasn't been modified until below function
+
+    this.setState({ items: currentItems, newItemText: "" }); // property of a function in React
+    // Set items to new array and then reset newItemText as blank otherwise newItemText would repeat the last item
+  },
+
+  render: function () {
+    // Set dynamic title with this.props
+    // Call scoped function with this.methodName
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'h3',
+        null,
+        this.props.title
+      ),
+      React.createElement(
+        'form',
+        { onSubmit: this.handleSubmit },
+        React.createElement('input', { onChange: this.onChange, value: this.state.newItemText }),
+        React.createElement(
+          'button',
+          { id: 'add-btn' },
+          'Add Ingredient'
+        ),
+        React.createElement(List, { items: this.state.items })
+      )
+    );
+  }
+});
+
+module.exports = ListManager;
+
+},{"./List.jsx":172,"react":171}],175:[function(require,module,exports){
+var React = require('react'); // require react
 var ReactDOM = require('react-dom'); // renders components to the screen/ui
-var List = require('./components/List.jsx'); // require parent component that nests all others make sure to check path
+var ListManager = require('./components/ListManager.jsx'); // require parent component that nests all others make sure to check path
 
 // Making a ul list with two components: UL = List.jsx LI = ListItem.jsx
-ReactDOM.render(React.createElement(List, null), document.getElementById('ingredients')); // show parent component; find by id
+
+// show parent component; find by id
+// title is this.props.title in ListManager.jsx
+
+ReactDOM.render(React.createElement(ListManager, { title: 'Ingredients' }), document.getElementById('ingredients'));
 
 // Must compile this code into regular js file in public/js/main.js so that the browser can render dom & components
 // in package json use this line in "scripts" to render "start":"watchify src/main.jsx -v -t [babelify -- presets [ react ] -o public/js/main.js]",
 // -v "verbose" shows when file was written
 // This uses browserify to output a usable file for the browser to get js
 
-},{"./components/List.jsx":172,"react":171,"react-dom":28}]},{},[174]);
+},{"./components/ListManager.jsx":174,"react":171,"react-dom":28}]},{},[175]);

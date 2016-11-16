@@ -1,1 +1,2 @@
 Refer to package JSON for NPM dependencies
+    "start": "watchify src/main.jsx -v -t [ babelify --presets [ react ] ] -o public/js/main.js",
