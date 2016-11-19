@@ -32,13 +32,20 @@ var ListManager = React.createClass({
     // Call scoped function with this.methodName
 
     var divStyle = {
-      marginTop: 10 // pass javascript css object into style attribute tag
+      marginTop: 10, // pass javascript css object into style attribute tag
+    }
+
+
+    if(this.props.headingColor) {
+        var headingStyle = {
+          background: this.props.headingColor
+        }
     }
 
     return (
         <div style={divStyle} className="col-sm-4">
-          <div className="panel panel-primary">
-            <div className="panel-heading">
+          <div className="panel panel-default">
+            <div style={headingStyle} className="panel-heading">
               <h3>{this.props.title}</h3>
             </div>
             <div className="row panel-body">

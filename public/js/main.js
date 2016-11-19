@@ -20837,18 +20837,23 @@ var ListManager = React.createClass({
     // Call scoped function with this.methodName
 
     var divStyle = {
-      marginTop: 10 // pass javascript css object into style attribute tag
-    };
+      marginTop: 10 };
+
+    if (this.props.headingColor) {
+      var headingStyle = {
+        background: this.props.headingColor
+      };
+    }
 
     return React.createElement(
       'div',
       { style: divStyle, className: 'col-sm-4' },
       React.createElement(
         'div',
-        { className: 'panel panel-primary' },
+        { className: 'panel panel-default' },
         React.createElement(
           'div',
-          { className: 'panel-heading' },
+          { style: headingStyle, className: 'panel-heading' },
           React.createElement(
             'h3',
             null,
@@ -20892,6 +20897,7 @@ var ListManager = require('./components/ListManager.jsx'); // require parent com
 // title is this.props.title in ListManager.jsx
 
 ReactDOM.render(React.createElement(ListManager, { title: 'Ingredients' }), document.getElementById('ingredients'));
+ReactDOM.render(React.createElement(ListManager, { title: 'Chirstmas List', headingColor: '#990000' }), document.getElementById('christmas'));
 
 // Must compile this code into regular js file in public/js/main.js so that the browser can render dom & components
 // in package json use this line in "scripts" to render "start":"watchify src/main.jsx -v -t [babelify -- presets [ react ] -o public/js/main.js]",
