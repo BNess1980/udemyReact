@@ -20801,11 +20801,11 @@ var ListItem = React.createClass({
 module.exports = ListItem; // export to make available to parent component
 
 },{"react":171}],174:[function(require,module,exports){
-var React = require('react'); // require react
+var React = require('react'); // require react library
 var List = require('./List.jsx'); // put the extension beacuse its jsx otherwise interpreted as js
 var ListManager = React.createClass({
   displayName: 'ListManager',
-  // most granular or child element
+
 
   // Everytime a component is rendered this funciton will be called
   // Initializes empty items array
@@ -20835,24 +20835,45 @@ var ListManager = React.createClass({
   render: function () {
     // Set dynamic title with this.props
     // Call scoped function with this.methodName
+
+    var divStyle = {
+      marginTop: 10 // pass javascript css object into style attribute tag
+    };
+
     return React.createElement(
       'div',
-      null,
+      { style: divStyle, className: 'col-sm-4' },
       React.createElement(
-        'h3',
-        null,
-        this.props.title
-      ),
-      React.createElement(
-        'form',
-        { onSubmit: this.handleSubmit },
-        React.createElement('input', { onChange: this.onChange, value: this.state.newItemText }),
+        'div',
+        { className: 'panel panel-primary' },
         React.createElement(
-          'button',
-          { id: 'add-btn' },
-          'Add Ingredient'
+          'div',
+          { className: 'panel-heading' },
+          React.createElement(
+            'h3',
+            null,
+            this.props.title
+          )
         ),
-        React.createElement(List, { items: this.state.items })
+        React.createElement(
+          'div',
+          { className: 'row panel-body' },
+          React.createElement(
+            'form',
+            { onSubmit: this.handleSubmit },
+            React.createElement(
+              'div',
+              { className: 'col-sm-9' },
+              React.createElement('input', { className: 'form-control', onChange: this.onChange, value: this.state.newItemText })
+            ),
+            React.createElement(
+              'button',
+              { id: 'add-btn', className: 'btn btn-primary' },
+              'Add'
+            ),
+            React.createElement(List, { items: this.state.items })
+          )
+        )
       )
     );
   }
@@ -20862,7 +20883,7 @@ module.exports = ListManager;
 
 },{"./List.jsx":172,"react":171}],175:[function(require,module,exports){
 var React = require('react'); // require react
-var ReactDOM = require('react-dom'); // renders components to the screen/ui
+var ReactDOM = require('react-dom'); // renders components to the screen
 var ListManager = require('./components/ListManager.jsx'); // require parent component that nests all others make sure to check path
 
 // Making a ul list with two components: UL = List.jsx LI = ListItem.jsx

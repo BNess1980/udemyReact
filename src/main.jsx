@@ -1,5 +1,5 @@
 var React = require('react'); // require react
-var ReactDOM = require('react-dom'); // renders components to the screen/ui
+var ReactDOM = require('react-dom'); // renders components to the screen
 var ListManager = require('./components/ListManager.jsx'); // require parent component that nests all others make sure to check path
 
 // Making a ul list with two components: UL = List.jsx LI = ListItem.jsx

@@ -1,6 +1,6 @@
-var React = require('react'); // require react
+var React = require('react'); // require react library
 var List = require('./List.jsx'); // put the extension beacuse its jsx otherwise interpreted as js
-var ListManager = React.createClass({ // most granular or child element
+var ListManager = React.createClass({
 
   // Everytime a component is rendered this funciton will be called
   // Initializes empty items array
@@ -30,14 +30,27 @@ var ListManager = React.createClass({ // most granular or child element
 
   render: function() { // Set dynamic title with this.props
     // Call scoped function with this.methodName
+
+    var divStyle = {
+      marginTop: 10 // pass javascript css object into style attribute tag
+    }
+
     return (
-        <div>
-          <h3>{this.props.title}</h3>
-          <form onSubmit={this.handleSubmit}>
-            <input onChange={this.onChange} value={this.state.newItemText} />
-            <button id="add-btn">Add Ingredient</button>
-            <List items={this.state.items} />
-          </form>
+        <div style={divStyle} className="col-sm-4">
+          <div className="panel panel-primary">
+            <div className="panel-heading">
+              <h3>{this.props.title}</h3>
+            </div>
+            <div className="row panel-body">
+              <form onSubmit={this.handleSubmit}>
+                <div className="col-sm-9">
+                  <input className="form-control" onChange={this.onChange} value={this.state.newItemText} />
+                </div>
+                <button id="add-btn" className="btn btn-primary">Add</button>
+                <List items={this.state.items} />
+              </form>
+            </div>
+          </div>
         </div>
     );
   }
