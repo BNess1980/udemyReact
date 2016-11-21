@@ -1,0 +1,17 @@
+{
+  "name": "udemy-react",
+  "description": "",
+  "main": "gulpfile.js",
+  "authors": [
+    "bness <BNess1980@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -42,9 +42,10 @@ var ListManager = React.createClass({
         }
     }
 
+
     return (
         <div style={divStyle} className="col-sm-4">
-          <div className="panel panel-default">
+          <div className="panel panel-primary">
             <div style={headingStyle} className="panel-heading">
               <h3>{this.props.title}</h3>
             </div>
