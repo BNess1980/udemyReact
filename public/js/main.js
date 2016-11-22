@@ -25645,6 +25645,10 @@ var EmailField = React.createClass({
     }
   },
 
+  clear: function () {
+    this.setState({ valid: true, value: "" });
+  },
+
   render: function () {
 
     var formClass = this.state.valid ? "form-group" : "form-group has-error";
@@ -25667,9 +25671,29 @@ module.exports = EmailField;
 },{"email-validator":1,"react":225}],230:[function(require,module,exports){
 var React = require('react');
 var EmailField = require('./EmailField.jsx');
+var NameField = require('./NameField.jsx');
 
 var LeadCapture = React.createClass({
   displayName: 'LeadCapture',
+
+
+  onSubmit: function (e) {
+    if (!this.refs.fieldEmail.state.valid || !this.refs.firstName.state.valid || !this.refs.lastName.state.valid) {
+      alert('Form has errors');
+    } else {
+      var httpRequestBody = {
+        email: this.refs.fieldEmail.state.value,
+        firstName: this.refs.firstName.state.value,
+        lasstName: this.refs.lastName.state.value
+      };
+      console.log('This is what we have ' + httpRequestBody);
+
+      /*clears text values in fields*/
+      this.refs.fieldEmail.clear();
+      this.refs.firstName.clear();
+      this.refs.lastName.clear();
+    }
+  },
 
   render: function () {
     return React.createElement(
@@ -25681,7 +25705,15 @@ var LeadCapture = React.createClass({
         React.createElement(
           'div',
           { className: 'panel-body' },
-          React.createElement(EmailField, null)
+          React.createElement(NameField, { type: 'First', ref: 'firstName' }),
+          ' ',
+          React.createElement(NameField, { type: 'Last', ref: 'lastName' }),
+          React.createElement(EmailField, { ref: 'fieldEmail' }),
+          React.createElement(
+            'button',
+            { className: 'btn btn-primary', onClick: this.onSubmit },
+            'Submit'
+          )
         )
       )
     );
@@ -25690,7 +25722,7 @@ var LeadCapture = React.createClass({
 
 module.exports = LeadCapture;
 
-},{"./EmailField.jsx":229,"react":225}],231:[function(require,module,exports){
+},{"./EmailField.jsx":229,"./NameField.jsx":234,"react":225}],231:[function(require,module,exports){
 var React = require('react'); // require react
 var ListItem = require('./ListItem.jsx'); // put the extension beacuse its jsx otherwise interpreted as js
 
@@ -25823,6 +25855,48 @@ module.exports = ListManager;
 
 },{"./List.jsx":231,"react":225}],234:[function(require,module,exports){
 var React = require('react');
+var NameField = React.createClass({
+  displayName: 'NameField',
+
+
+  getInitialState: function () {
+    return { valid: true, value: "" };
+  },
+
+  onBlur: function (e) {
+    var value = e.target.value;
+    if (value === '' || value === null || value === undefined) {
+      this.setState({ valid: false, value: e.target.value });
+    } else {
+      this.setState({ valid: true, value: e.target.value });
+    }
+  },
+
+  clear: function () {
+    this.setState({ value: "" });
+  },
+
+  render: function () {
+
+    var formClass = this.state.valid ? "form-group" : "form-group has-error";
+
+    return React.createElement(
+      'div',
+      { className: formClass },
+      React.createElement(
+        'label',
+        { htmlFor: this.props.type + 'Name' },
+        this.props.type + 'Name'
+      ),
+      React.createElement('input', { id: this.props.type + 'Name', type: 'email', className: 'form-control', onBlur: this.onBlur, placeholder: this.props.type + ' Name', value: this.state.value })
+    );
+  }
+});
+
+module.exports = NameField;
+
+},{"react":225}],235:[function(require,module,exports){
+var React = require('react');
 var ListManager = require('./ListManager.jsx'); // require parent component that nests all others make sure to check path
 
 
@@ -25845,7 +25919,7 @@ var Page1 = React.createClass({
 
 module.exports = Page1;
 
-},{"./ListManager.jsx":233,"react":225}],235:[function(require,module,exports){
+},{"./ListManager.jsx":233,"react":225}],236:[function(require,module,exports){
 var React = require('react');
 var ListManager = require('./ListManager.jsx'); // require parent component that nests all others make sure to check path
 
@@ -25869,7 +25943,7 @@ var Page2 = React.createClass({
 
 module.exports = Page2;
 
-},{"./ListManager.jsx":233,"react":225}],236:[function(require,module,exports){
+},{"./ListManager.jsx":233,"react":225}],237:[function(require,module,exports){
 var React = require('react');
 var LeadCapture = require('./LeadCapture.jsx'); // require parent component that nests all others make sure to check path
 
@@ -25893,7 +25967,7 @@ var Page3 = React.createClass({
 
 module.exports = Page3;
 
-},{"./LeadCapture.jsx":230,"react":225}],237:[function(require,module,exports){
+},{"./LeadCapture.jsx":230,"react":225}],238:[function(require,module,exports){
 var React = require('react'); // require react
 var ReactDOM = require('react-dom'); // renders components to the screen
 var Routes = require('./routes.jsx');
@@ -25913,7 +25987,7 @@ ReactDOM.render(Routes, document.getElementById('main'));
 // -v "verbose" shows when file was written
 // This uses browserify to output a usable file for the browser to get js
 
-},{"./routes.jsx":238,"react":225,"react-dom":32}],238:[function(require,module,exports){
+},{"./routes.jsx":239,"react":225,"react-dom":32}],239:[function(require,module,exports){
 var React = require('react');
 var ReactRouter = require('react-router');
 
@@ -25941,4 +26015,4 @@ var Routes = React.createElement(
 
 module.exports = Routes;
 
-},{"./components/Base.jsx":228,"./components/Page1.jsx":234,"./components/Page2.jsx":235,"./components/Page3.jsx":236,"react":225,"react-router":59}]},{},[237]);
+},{"./components/Base.jsx":228,"./components/Page1.jsx":235,"./components/Page2.jsx":236,"./components/Page3.jsx":237,"react":225,"react-router":59}]},{},[238]);

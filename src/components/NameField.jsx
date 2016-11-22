@@ -1,14 +1,13 @@
 var React = require('react');
-var validator = require('email-validator');
-var EmailField = React.createClass({
+var NameField = React.createClass({
 
   getInitialState: function() {
     return {valid:true, value:""}
   },
 
-  onChange: function(e) {
+  onBlur: function(e) {
     var value = e.target.value;
-    if(!validator.validate(value)) {
+    if(value === '' || value === null || value === undefined) {
       this.setState({valid:false, value:e.target.value});
     } else {
       this.setState({valid:true, value:e.target.value});
@@ -16,7 +15,7 @@ var EmailField = React.createClass({
   },
 
   clear: function() {
-    this.setState({valid:true, value:""});
+    this.setState({value:""});
   },
 
   render:function() {
@@ -25,11 +24,11 @@ var EmailField = React.createClass({
 
     return(
       <div className={formClass}>
-         <label htmlFor="email">Email address</label>
-         <input id="email" type="email" className="form-control" onChange={this.onChange} placeholder="Email" value={this.state.value} />
+         <label htmlFor={this.props.type +'Name'}>{this.props.type + 'Name'}</label>
+         <input id={this.props.type +'Name'} type="email" className="form-control" onBlur={this.onBlur} placeholder={this.props.type + ' Name'} value={this.state.value} />
       </div>
     );
   }
 });
 
-module.exports = EmailField;
+module.exports = NameField;
