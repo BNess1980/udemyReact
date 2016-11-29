@@ -6,7 +6,7 @@ requireDir = require('require-dir')('./gulp-tasks');
 gulp.task('watch', function() {
 	// Watches for changes in style.sass and runs the sass task
 	gulp.watch('sass/style.scss', ['sass']);
-	gulp.watch('src/main.jsx', ['browserify']);
+	gulp.watch('src/**/*.jsx', ['browserify']);
 });
 
 // Simple Local Server

@@ -2,6 +2,7 @@ var React = require('react'); // require react
 var ListItem = require('./ListItem.jsx'); // put the extension beacuse its jsx otherwise interpreted as js
 
 var List = React.createClass({
+
   render: function() {
 
       var createItem = function(text,index) {

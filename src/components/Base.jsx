@@ -19,13 +19,16 @@ var Base = React.createClass({
                                   <Link to="/">Home</Link>
                               </li>
                               <li>
-                                  <Link to="/page1">Page1</Link>
+                                  <Link to="/page1">Page 1</Link>
                               </li>
                               <li>
-                                  <Link to="/page2">Page2</Link>
+                                  <Link to="/page2">Page 2</Link>
                               </li>
                               <li>
-                                  <Link to="/page3">Page3</Link>
+                                  <Link to="/page3">Page 3</Link>
+                              </li>
+                              <li>
+                                  <Link to="/page4">Page 4</Link>
                               </li>
                           </ul>
                         </div>
